@@ -71,45 +71,19 @@ async function checkGrammar() {
   outputFooter.style.display = 'none';
   lastCorrected = '';
 
-  const prompt = `You are an expert Korean grammar checker. The user will provide Korean text. Your job:
-1. Correct any grammar, spelling, spacing, or punctuation errors
-2. Return ONLY a raw JSON object with exactly these fields:
-   - "corrected": the fully corrected Korean text (string)
-   - "hasErrors": boolean — true if any corrections were made
-   - "changes": array of objects, each with:
-       "original": the incorrect word or phrase (string)
-       "fixed": the corrected version (string)
-       "reason": a short English explanation, max 10 words (string)
-
-Rules:
-- If the text is already correct, set hasErrors to false and changes to []
-- Do NOT wrap in markdown or backticks
-- Respond ONLY with the raw JSON object, nothing else
-
-Korean text:
-${text}`;
-
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://kgrammar-server.onrender.com/api/check', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-      },
-      agent: new (require('https-proxy-agent'))('http://fixie:mcLCpaN4FcMJU9J@criterium.usefixie.com:80'),
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
     });
 
-    if (!res.ok) throw new Error('API error: ' + res.status);
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'API error');
+    }
 
-    const data = await res.json();
-    const raw = data.content.map(b => b.text || '').join('').trim();
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const result = JSON.parse(clean);
+    const result = await res.json();
 
     lastCorrected = result.corrected;
     copyBtn.style.display = 'block';
@@ -142,7 +116,7 @@ ${text}`;
     }
   } catch (err) {
     console.error(err);
-    output.innerHTML = '<div class="kg-error">Something went wrong. Please try again in a moment.</div>';
+    output.innerHTML = '<div class="kg-error">' + (err.message || 'Something went wrong. Please try again.') + '</div>';
   }
 
   checkBtn.disabled = false;
