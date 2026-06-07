@@ -577,3 +577,9 @@ body {
 .kg-subtitle {
   font-size: 15px;
 }
+
+@media (max-width: 680px) {
+  .kg-word-section .kg-panels {
+    grid-template-columns: 1fr;
+  }
+}
