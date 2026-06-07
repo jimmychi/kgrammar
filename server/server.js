@@ -4,7 +4,12 @@ const rateLimit = require('express-rate-limit');
 
 const app = express();
 
-app.use(cors({ origin: 'https://kgrammar.com' }));
+app.use(cors({
+  origin: [
+    'https://kgrammar.com',
+    'https://kgrammar-client.onrender.com'
+  ]
+}));
 app.use(express.json());
 
 const limiter = rateLimit({
