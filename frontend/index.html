@@ -37,7 +37,10 @@
       <div class="kg-panel" id="left-panel">
         <div class="kg-panel-header">
           <span class="kg-panel-label">INPUT</span>
-          <button class="kg-copy-btn" onclick="clearAll()">Clear</button>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="kg-char-count" id="char-count">0 / 500</span>
+            <button class="kg-copy-btn" onclick="clearAll()">Clear</button>
+          </div>
         </div>
         <div class="kg-drop-zone" id="drop-zone">
           <textarea
@@ -55,7 +58,6 @@
           </div>
         </div>
         <div class="kg-panel-footer">
-          <span class="kg-char-count" id="char-count">0 / 500</span>
           <span class="kg-detected" id="detected-lang"></span>
           <label class="kg-copy-btn kg-upload-btn" style="margin-left:auto;">
             📷 Upload image
