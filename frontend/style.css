@@ -527,3 +527,9 @@ body {
   width: 220px;
   justify-content: center;
 }
+
+.kg-cta-row .kg-btn-cta {
+  width: 260px;
+  justify-content: center;
+  white-space: nowrap;
+}
