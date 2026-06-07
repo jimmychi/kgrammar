@@ -85,6 +85,8 @@ async function extractTextFromImage(file) {
         charCount.textContent = data.text.length + ' / 500';
         const event = new Event('input');
         textarea.dispatchEvent(event);
+        checkBtn.textContent = "Get Translation";
+        checkBtn.style.background = "#1D9E75";
       } else {
         textarea.placeholder = 'Could not extract text. Try another image.';
       }
