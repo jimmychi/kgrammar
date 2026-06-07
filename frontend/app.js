@@ -232,3 +232,71 @@ function translateText() {
   }
   checkGrammar();
 }
+
+// Word lookup
+const wordInput = document.getElementById('word-input');
+const wordOutput = document.getElementById('word-output');
+const wordBtn = document.getElementById('word-btn');
+const wordCopyBtn = document.getElementById('word-copy-btn');
+const wordCharCount = document.getElementById('word-char-count');
+let lastWordResult = '';
+
+wordInput.addEventListener('input', () => {
+  wordCharCount.textContent = wordInput.value.length + ' / 100';
+});
+
+wordInput.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') lookupWord();
+});
+
+function clearWord() {
+  wordInput.value = '';
+  wordCharCount.textContent = '0 / 100';
+  wordOutput.innerHTML = '<span class="kg-placeholder">Translation will appear here...</span>';
+  wordCopyBtn.style.display = 'none';
+  lastWordResult = '';
+  wordInput.focus();
+}
+
+function copyWord() {
+  if (!lastWordResult) return;
+  navigator.clipboard.writeText(lastWordResult).then(() => {
+    wordCopyBtn.textContent = 'Copied!';
+    setTimeout(() => wordCopyBtn.textContent = 'Copy', 1800);
+  });
+}
+
+async function lookupWord() {
+  const text = wordInput.value.trim();
+  if (!text) { wordInput.focus(); return; }
+
+  wordBtn.disabled = true;
+  wordBtn.textContent = 'Translating...';
+  wordOutput.innerHTML = '<div class="kg-loading"><div class="kg-spinner"></div><span>Looking up translation...</span></div>';
+  wordCopyBtn.style.display = 'none';
+  lastWordResult = '';
+
+  try {
+    const res = await fetch('https://kgrammar.onrender.com/api/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, mode: 'translate-to-english' })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'API error');
+    }
+
+    const result = await res.json();
+    lastWordResult = result.corrected;
+    wordCopyBtn.style.display = 'block';
+    wordOutput.innerHTML = '<div style="font-size: 17px; line-height: 1.75;">' + escapeHtml(result.corrected) + '</div>';
+  } catch (err) {
+    console.error(err);
+    wordOutput.innerHTML = '<div class="kg-error">' + (err.message || 'Something went wrong.') + '</div>';
+  }
+
+  wordBtn.disabled = false;
+  wordBtn.textContent = 'Translate Word';
+}

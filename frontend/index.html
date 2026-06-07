@@ -96,6 +96,47 @@
     </div>
   </main>
 
+  <div class="kg-word-section">
+    <div class="kg-word-header">
+      <div class="kg-word-title">Word &amp; Phrase Lookup</div>
+      <p class="kg-word-subtitle">Paste a single Korean word or phrase for a quick translation.</p>
+    </div>
+    <div class="kg-panels">
+      <div class="kg-panel">
+        <div class="kg-panel-header">
+          <span class="kg-panel-label">Korean Word or Phrase</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="kg-char-count" id="word-char-count">0 / 100</span>
+            <button class="kg-copy-btn" onclick="clearWord()">Clear</button>
+          </div>
+        </div>
+        <textarea
+          class="kg-input"
+          id="word-input"
+          placeholder="단어나 구문을 입력하세요..."
+          maxlength="100"
+          aria-label="Korean word input"
+          style="min-height: 120px;"
+        ></textarea>
+      </div>
+
+      <div class="kg-panel">
+        <div class="kg-panel-header">
+          <span class="kg-panel-label">Translation</span>
+          <button class="kg-copy-btn" id="word-copy-btn" style="display:none" onclick="copyWord()">Copy</button>
+        </div>
+        <div class="kg-output" id="word-output" style="min-height:120px;">
+          <span class="kg-placeholder">Translation will appear here...</span>
+        </div>
+      </div>
+    </div>
+    <div class="kg-cta-row">
+      <button class="kg-btn kg-btn-primary kg-btn-cta" id="word-btn" onclick="lookupWord()">
+        Translate Word
+      </button>
+    </div>
+  </div>
+
   <footer class="kg-footer">
     <p>kgrammar.com</p>
   </footer>
