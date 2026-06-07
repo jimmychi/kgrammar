@@ -190,7 +190,13 @@ body {
 .kg-cta-row {
   display: flex;
   justify-content: center;
+  gap: 16px;
   margin-bottom: 16px;
+}
+
+.kg-btn-cta {
+  width: 220px;
+  justify-content: center;
 }
 
 .kg-btn {
@@ -515,4 +521,9 @@ body {
 
 .kg-btn-secondary:hover {
   background: var(--green-light);
+}
+
+.kg-cta-row .kg-btn-cta {
+  width: 220px;
+  justify-content: center;
 }
