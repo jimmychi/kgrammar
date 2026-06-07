@@ -16,8 +16,6 @@
     <div class="kg-header-inner">
       <div class="kg-logo">k<span>grammar</span></div>
       <span class="kg-badge">beta</span>
-      <div style="flex:1"></div>
-      
     </div>
   </header>
 
@@ -30,8 +28,11 @@
     <div class="kg-panels">
       <div class="kg-panel">
         <div class="kg-panel-header">
-          <span class="kg-panel-label">Your Korean</span>
-          <span class="kg-char-count" id="char-count">0 / 500</span>
+          <span class="kg-panel-label">Paste your Korean text here</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="kg-char-count" id="char-count">0 / 500</span>
+            <button class="kg-copy-btn" onclick="clearAll()">Clear</button>
+          </div>
         </div>
         <textarea
           class="kg-input"
@@ -40,21 +41,18 @@
           maxlength="500"
           aria-label="Korean text input"
         ></textarea>
-        <div class="kg-panel-footer">
-          <button class="kg-btn kg-btn-ghost" onclick="clearAll()">Clear</button>
-        </div>
       </div>
 
       <div class="kg-panel">
         <div class="kg-panel-header">
-          <span class="kg-panel-label">Corrected</span>
-          <button class="kg-copy-btn" id="copy-btn" style="display:none" onclick="copyResult()">Copy</button><button class="kg-copy-btn" id="listen-btn" style="display:none" onclick="listenKorean()">🔊 Listen</button>
+          <span class="kg-panel-label">Checked</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="kg-copy-btn" id="copy-btn" style="display:none" onclick="copyResult()">Copy</button>
+            <button class="kg-copy-btn" id="listen-btn" style="display:none" onclick="listenKorean()">🔊 Listen</button>
+          </div>
         </div>
         <div class="kg-output" id="output" aria-live="polite">
           <span class="kg-placeholder">Corrections will appear here...</span>
-        </div>
-        <div class="kg-panel-footer" id="output-footer" style="display:none">
-          <span class="kg-footer-note" id="error-count"></span>
         </div>
       </div>
     </div>

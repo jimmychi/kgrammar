@@ -35,7 +35,7 @@ function clearAll() {
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
   document.getElementById('listen-btn').style.display = 'none';
-  outputFooter.style.display = 'none';
+  
   lastCorrected = '';
   textarea.focus();
 }
@@ -70,7 +70,7 @@ async function checkGrammar() {
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
   document.getElementById('listen-btn').style.display = 'none';
-  outputFooter.style.display = 'none';
+  
   lastCorrected = '';
 
   try {
@@ -90,17 +90,17 @@ async function checkGrammar() {
     lastCorrected = result.corrected;
     copyBtn.style.display = 'block';
     document.getElementById('listen-btn').style.display = 'block';
-    outputFooter.style.display = 'flex';
+    
 
     if (!result.hasErrors) {
       output.innerHTML =
         '<div class="kg-no-errors">✓ No errors found — your Korean looks great!</div>' +
         '<div style="padding: 4px 0; font-size: 15px; line-height: 1.75;">' + escapeHtml(result.corrected) + '</div>';
-      errorCount.textContent = 'No corrections needed';
+      
     } else {
       const count = result.changes ? result.changes.length : 0;
       output.innerHTML = '<div style="font-size: 15px; line-height: 1.75;">' + buildCorrectedHtml(result.corrected, result.changes) + '</div>';
-      errorCount.textContent = count + ' correction' + (count !== 1 ? 's' : '') + ' made';
+      
 
       if (result.changes && result.changes.length > 0) {
         expBody.innerHTML = result.changes.map((c, i) => `
