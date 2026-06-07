@@ -175,6 +175,15 @@ async function checkGrammar() {
     const result = await res.json();
     lastCorrected = result.corrected;
     copyBtn.style.display = 'block';
+    if (mode === 'translate-to-english') {
+      listenBtn.disabled = true;
+      listenBtn.style.opacity = '0.4';
+      listenBtn.style.cursor = 'not-allowed';
+    } else {
+      listenBtn.disabled = false;
+      listenBtn.style.opacity = '1';
+      listenBtn.style.cursor = 'pointer';
+    }
 
     if (mode === 'translate' || mode === 'translate-to-english') {
       output.innerHTML = '<div style="font-size: 17px; line-height: 1.75;">' + escapeHtml(result.corrected) + '</div>';
