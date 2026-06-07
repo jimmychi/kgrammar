@@ -506,3 +506,13 @@ body {
   border-radius: var(--radius-md);
   margin: 8px 14px;
 }
+
+.kg-btn-secondary {
+  background: #fff;
+  color: var(--green);
+  border: 2px solid var(--green);
+}
+
+.kg-btn-secondary:hover {
+  background: var(--green-light);
+}

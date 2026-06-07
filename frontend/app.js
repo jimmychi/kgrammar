@@ -212,3 +212,14 @@ async function checkGrammar() {
   checkBtn.disabled = false;
   checkBtn.textContent = mode === 'translate' ? 'Translate to Korean' : mode === 'translate-to-english' ? 'Translate' : 'Check Grammar';
 }
+
+function translateText() {
+  const text = textarea.value.trim();
+  if (!text) { textarea.focus(); return; }
+  if (isKorean(text)) {
+    currentMode = 'translate-to-english';
+  } else {
+    currentMode = 'translate';
+  }
+  checkGrammar();
+}
