@@ -63,6 +63,31 @@ app.post('/api/extract', async (req, res) => {
   }
 });
 
+app.post('/api/detect', async (req, res) => {
+  const { text } = req.body;
+  if (!text) return res.status(400).json({ error: 'No text.' });
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5',
+        max_tokens: 50,
+        messages: [{ role: 'user', content: 'Detect the language of this text and reply with ONLY the language name in English (e.g. "Japanese", "Spanish", "French"). Nothing else.\n\n' + text }]
+      })
+    });
+    const data = await response.json();
+    const language = data.content.map(b => b.text || '').join('').trim();
+    res.json({ language });
+  } catch (err) {
+    res.status(500).json({ error: 'Detection failed.' });
+  }
+});
+
 app.post('/api/check', async (req, res) => {
   const { text, mode } = req.body;
 

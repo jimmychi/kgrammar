@@ -7,6 +7,7 @@ const expBody = document.getElementById('exp-body');
 const copyBtn = document.getElementById('copy-btn');
 const listenBtn = document.getElementById('listen-btn');
 const dropZone = document.getElementById('drop-zone');
+const detectedLang = document.getElementById('detected-lang');
 const dropOverlay = document.getElementById('drop-overlay');
 
 let lastCorrected = '';
@@ -116,6 +117,8 @@ function clearAll() {
   lastCorrected = '';
   checkBtn.textContent = 'Check Grammar';
   currentMode = 'grammar';
+  detectedLang.classList.remove('visible');
+  detectedLang.textContent = '';
   textarea.focus();
 }
 
@@ -299,4 +302,26 @@ async function lookupWord() {
 
   wordBtn.disabled = false;
   wordBtn.textContent = 'Translate';
+}
+
+let detectTimeout = null;
+async function detectLanguage(text) {
+  clearTimeout(detectTimeout);
+  detectTimeout = setTimeout(async () => {
+    if (text.length < 3) return;
+    try {
+      const res = await fetch('https://kgrammar.onrender.com/api/detect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      if (data.language) {
+        detectedLang.textContent = 'Detected: ' + data.language;
+        detectedLang.classList.add('visible');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, 600);
 }
