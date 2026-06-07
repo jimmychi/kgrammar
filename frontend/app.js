@@ -72,7 +72,7 @@ async function checkGrammar() {
   lastCorrected = '';
 
   try {
-    const res = await fetch('https://kgrammar-server.onrender.com/api/check', {
+    const res = await fetch('https://kgrammar.onrender.com/api/check', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text })
