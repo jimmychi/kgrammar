@@ -36,7 +36,6 @@ textarea.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') checkGrammar();
 });
 
-// Drag and drop
 dropZone.addEventListener('dragover', (e) => {
   e.preventDefault();
   dropOverlay.classList.add('active');
@@ -83,10 +82,9 @@ async function extractTextFromImage(file) {
       if (data.text) {
         textarea.value = data.text;
         charCount.textContent = data.text.length + ' / 500';
-        const event = new Event('input');
-        textarea.dispatchEvent(event);
-        checkBtn.textContent = "Get Translation";
-        checkBtn.style.background = "#1D9E75";
+        // Set mode to translate-to-english since image likely contains Korean
+        currentMode = 'translate-to-english';
+        checkBtn.textContent = 'Get Translation';
       } else {
         textarea.placeholder = 'Could not extract text. Try another image.';
       }
@@ -156,8 +154,8 @@ async function checkGrammar() {
 
   const mode = currentMode;
   checkBtn.disabled = true;
-  checkBtn.textContent = mode === 'translate' ? 'Translating...' : 'Checking...';
-  output.innerHTML = '<div class="kg-loading"><div class="kg-spinner"></div><span>' + (mode === 'translate' ? 'Translating to Korean...' : 'Analyzing your Korean...') + '</span></div>';
+  checkBtn.textContent = mode === 'translate' ? 'Translating...' : mode === 'translate-to-english' ? 'Translating...' : 'Checking...';
+  output.innerHTML = '<div class="kg-loading"><div class="kg-spinner"></div><span>' + (mode === 'translate-to-english' ? 'Translating to English...' : mode === 'translate' ? 'Translating to Korean...' : 'Analyzing your Korean...') + '</span></div>';
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
   lastCorrected = '';
@@ -178,7 +176,7 @@ async function checkGrammar() {
     lastCorrected = result.corrected;
     copyBtn.style.display = 'block';
 
-    if (mode === 'translate') {
+    if (mode === 'translate' || mode === 'translate-to-english') {
       output.innerHTML = '<div style="font-size: 17px; line-height: 1.75;">' + escapeHtml(result.corrected) + '</div>';
     } else {
       if (!result.hasErrors) {
@@ -212,5 +210,5 @@ async function checkGrammar() {
   }
 
   checkBtn.disabled = false;
-  checkBtn.textContent = mode === 'translate' ? 'Translate to Korean' : 'Check Grammar';
+  checkBtn.textContent = mode === 'translate' ? 'Translate to Korean' : mode === 'translate-to-english' ? 'Get Translation' : 'Check Grammar';
 }

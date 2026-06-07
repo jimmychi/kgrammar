@@ -73,7 +73,7 @@ app.post('/api/check', async (req, res) => {
     return res.status(400).json({ error: 'Text too long.' });
   }
 
-  const prompt = mode === 'translate'
+  const prompt = mode === 'translate-to-english'    ? `You are an expert Korean to English translator. Translate the following Korean text to natural, fluent English.Return ONLY a raw JSON object with this field:- "corrected": the English translation (string)Do NOT wrap in markdown or backticks. Respond ONLY with the raw JSON object.Korean text:${text}`    : mode === 'translate'
     ? `You are an expert Korean translator. Translate the following English text to natural, fluent Korean.
 Return ONLY a raw JSON object with this field:
 - "corrected": the Korean translation (string)
