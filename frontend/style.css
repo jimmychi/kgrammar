@@ -600,3 +600,7 @@ body {
 .kg-detected.visible {
   display: inline-block;
 }
+
+.kg-panel-header {
+  min-height: 42px;
+}
