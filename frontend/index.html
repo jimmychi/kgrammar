@@ -55,7 +55,9 @@
           </div>
         </div>
         <div class="kg-panel-footer">
-          <label class="kg-copy-btn kg-upload-btn">
+          <span class="kg-char-count" id="char-count">0 / 500</span>
+          <span class="kg-detected" id="detected-lang"></span>
+          <label class="kg-copy-btn kg-upload-btn" style="margin-left:auto;">
             📷 Upload image
             <input type="file" id="image-upload" accept="image/*" style="display:none" onchange="handleImageUpload(event)" />
           </label>
