@@ -23,8 +23,8 @@
 
   <main class="kg-main">
     <div class="kg-hero">
-      <h1 class="kg-title">Fix your Korean, <em>instantly.</em></h1>
-      <p class="kg-subtitle">Paste any Korean text — grammar, spacing, and spelling errors corrected in seconds.</p>
+      <h1 class="kg-title">Korean Grammar Checker.</h1>
+      <p class="kg-subtitle">Paste your Korean sentences for corrections and suggestions.</p>
     </div>
 
     <div class="kg-panels">
@@ -42,9 +42,6 @@
         ></textarea>
         <div class="kg-panel-footer">
           <button class="kg-btn kg-btn-ghost" onclick="clearAll()">Clear</button>
-          <button class="kg-btn kg-btn-primary" id="check-btn" onclick="checkGrammar()">
-            Check grammar
-          </button>
         </div>
       </div>
 
@@ -60,6 +57,12 @@
           <span class="kg-footer-note" id="error-count"></span>
         </div>
       </div>
+    </div>
+
+    <div class="kg-cta-row">
+      <button class="kg-btn kg-btn-primary kg-btn-cta" id="check-btn" onclick="checkGrammar()">
+        Check grammar
+      </button>
     </div>
 
     <div class="kg-explanations" id="explanations">
@@ -86,7 +89,7 @@
         <div class="kg-info-icon">?</div>
         <div>
           <p class="kg-info-title">Plain English explanations</p>
-          <p class="kg-info-text">Every correction comes with a short explanation so you actually learn from it.</p>
+          <p class="kg-info-text">Every correction comes with a full explanation so you actually learn from it.</p>
         </div>
       </div>
     </div>

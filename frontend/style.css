@@ -22,13 +22,11 @@
   --radius-xl: 16px;
 }
 
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 body {
   font-family: 'DM Sans', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.6;
   color: var(--gray-900);
   background: var(--gray-50);
@@ -54,17 +52,15 @@ body {
 
 .kg-logo {
   font-family: 'Instrument Serif', serif;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--gray-900);
   letter-spacing: -0.5px;
 }
 
-.kg-logo span {
-  color: var(--green);
-}
+.kg-logo span { color: var(--green); }
 
 .kg-badge {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   background: var(--green-light);
   color: var(--green-dark);
@@ -73,7 +69,7 @@ body {
 }
 
 .kg-tagline-header {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--gray-400);
   font-weight: 300;
 }
@@ -91,7 +87,7 @@ body {
 
 .kg-title {
   font-family: 'Instrument Serif', serif;
-  font-size: 40px;
+  font-size: 44px;
   font-weight: 400;
   color: var(--gray-900);
   letter-spacing: -1px;
@@ -99,13 +95,8 @@ body {
   margin-bottom: 10px;
 }
 
-.kg-title em {
-  color: var(--green);
-  font-style: italic;
-}
-
 .kg-subtitle {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--gray-600);
   font-weight: 300;
 }
@@ -114,7 +105,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .kg-panel {
@@ -136,7 +127,7 @@ body {
 }
 
 .kg-panel-label {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--gray-600);
   text-transform: uppercase;
@@ -144,7 +135,7 @@ body {
 }
 
 .kg-char-count {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--gray-400);
 }
 
@@ -156,22 +147,20 @@ body {
   outline: none;
   padding: 16px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.75;
   resize: none;
   background: #fff;
   color: var(--gray-900);
 }
 
-.kg-input::placeholder {
-  color: var(--gray-400);
-}
+.kg-input::placeholder { color: var(--gray-400); }
 
 .kg-output {
   flex: 1;
   min-height: 240px;
   padding: 16px;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.75;
   color: var(--gray-900);
 }
@@ -179,7 +168,7 @@ body {
 .kg-placeholder {
   color: var(--gray-400);
   font-style: italic;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .kg-panel-footer {
@@ -193,19 +182,25 @@ body {
 }
 
 .kg-footer-note {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--gray-400);
   margin-right: auto;
+}
+
+.kg-cta-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
 .kg-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: var(--radius-md);
   font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   border: 0.5px solid var(--gray-200);
@@ -219,9 +214,7 @@ body {
   border-color: var(--gray-400);
 }
 
-.kg-btn:active {
-  transform: scale(0.98);
-}
+.kg-btn:active { transform: scale(0.98); }
 
 .kg-btn-ghost {
   background: transparent;
@@ -251,9 +244,15 @@ body {
   transform: none;
 }
 
+.kg-btn-cta {
+  padding: 14px 48px;
+  font-size: 18px;
+  border-radius: var(--radius-lg);
+}
+
 .kg-copy-btn {
   padding: 3px 10px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   border-radius: var(--radius-md);
   background: #fff;
@@ -264,9 +263,7 @@ body {
   transition: background 0.12s;
 }
 
-.kg-copy-btn:hover {
-  background: var(--gray-100);
-}
+.kg-copy-btn:hover { background: var(--gray-100); }
 
 .diff-added {
   background: var(--green-light);
@@ -288,7 +285,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--green-dark);
   background: var(--green-light);
   padding: 10px 14px;
@@ -301,12 +298,12 @@ body {
   align-items: center;
   gap: 10px;
   color: var(--gray-600);
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .kg-spinner {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border: 2px solid var(--gray-200);
   border-top-color: var(--green);
   border-radius: 50%;
@@ -314,9 +311,7 @@ body {
   flex-shrink: 0;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .kg-explanations {
   background: #fff;
@@ -327,15 +322,13 @@ body {
   display: none;
 }
 
-.kg-explanations.visible {
-  display: block;
-}
+.kg-explanations.visible { display: block; }
 
 .kg-exp-header {
   padding: 10px 16px;
   border-bottom: 0.5px solid var(--gray-200);
   background: var(--gray-100);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--gray-600);
   text-transform: uppercase;
@@ -346,24 +339,24 @@ body {
   padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .kg-exp-item {
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
 .kg-exp-num {
-  min-width: 22px;
-  height: 22px;
+  min-width: 24px;
+  height: 24px;
   background: var(--green-light);
   color: var(--green-dark);
   border-radius: 50%;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -375,6 +368,16 @@ body {
 .kg-exp-text {
   color: var(--gray-900);
   line-height: 1.6;
+}
+
+.kg-exp-detail {
+  font-size: 15px;
+  color: var(--gray-600);
+  line-height: 1.6;
+  font-weight: 300;
+  border-left: 2px solid var(--green-light);
+  padding-left: 10px;
+  margin-top: 6px;
 }
 
 .kg-info {
@@ -396,7 +399,7 @@ body {
 
 .kg-info-icon {
   font-family: 'Instrument Serif', serif;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--green);
   min-width: 28px;
   text-align: center;
@@ -404,14 +407,14 @@ body {
 }
 
 .kg-info-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--gray-900);
   margin-bottom: 4px;
 }
 
 .kg-info-text {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--gray-600);
   line-height: 1.5;
   font-weight: 300;
@@ -420,7 +423,7 @@ body {
 .kg-footer {
   text-align: center;
   padding: 24px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--gray-400);
   border-top: 0.5px solid var(--gray-200);
   background: #fff;
@@ -428,33 +431,15 @@ body {
 
 .kg-error {
   color: var(--red-text);
-  font-size: 14px;
+  font-size: 16px;
   background: var(--red-light);
   padding: 10px 14px;
   border-radius: var(--radius-md);
 }
 
 @media (max-width: 680px) {
-  .kg-panels {
-    grid-template-columns: 1fr;
-  }
-  .kg-info {
-    grid-template-columns: 1fr;
-  }
-  .kg-title {
-    font-size: 28px;
-  }
-  .kg-tagline-header {
-    display: none;
-  }
-}
-
-.kg-exp-detail {
-  font-size: 13px;
-  color: var(--gray-600);
-  line-height: 1.6;
-  font-weight: 300;
-  border-left: 2px solid var(--green-light);
-  padding-left: 10px;
-  margin-top: 4px;
+  .kg-panels { grid-template-columns: 1fr; }
+  .kg-info { grid-template-columns: 1fr; }
+  .kg-title { font-size: 32px; }
+  .kg-tagline-header { display: none; }
 }
