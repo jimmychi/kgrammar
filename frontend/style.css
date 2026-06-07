@@ -549,8 +549,6 @@ body {
 
 .kg-word-section {
   margin-top: 40px;
-  padding-top: 32px;
-  border-top: 0.5px solid var(--gray-200);
 }
 
 .kg-word-header {

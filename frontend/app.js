@@ -298,5 +298,5 @@ async function lookupWord() {
   }
 
   wordBtn.disabled = false;
-  wordBtn.textContent = 'Translate Word';
+  wordBtn.textContent = 'Translate';
 }
