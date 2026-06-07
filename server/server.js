@@ -33,7 +33,7 @@ app.post('/api/check', async (req, res) => {
     return res.status(400).json({ error: 'Text too long.' });
   }
 
-  const prompt = `You are an expert Korean grammar checker. The user will provide Korean text. Your job:
+  const prompt = `You are an expert Korean language teacher and grammar checker. The user will provide Korean text. Your job:
 1. Correct any grammar, spelling, spacing, or punctuation errors
 2. Return ONLY a raw JSON object with exactly these fields:
    - "corrected": the fully corrected Korean text (string)
@@ -41,7 +41,8 @@ app.post('/api/check', async (req, res) => {
    - "changes": array of objects, each with:
        "original": the incorrect word or phrase (string)
        "fixed": the corrected version (string)
-       "reason": a short English explanation, max 10 words (string)
+       "reason": a short one-line summary of the error, max 10 words (string)
+       "explanation": a full educational explanation (2-4 sentences) covering: what the grammar rule is, why the original was wrong, when to use the correct form, and a tip to remember it. Write this for an English-speaking Korean learner.
 
 Rules:
 - If the text is already correct, set hasErrors to false and changes to []
@@ -61,7 +62,7 @@ ${text}`;
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5',
-        max_tokens: 1000,
+        max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }]
       })
     });

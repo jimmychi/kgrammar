@@ -104,10 +104,13 @@ async function checkGrammar() {
           <div class="kg-exp-item">
             <div class="kg-exp-num">${i + 1}</div>
             <div class="kg-exp-text">
-              <span class="diff-removed">${escapeHtml(c.original)}</span>
-              &rarr;
-              <span class="diff-added">${escapeHtml(c.fixed)}</span>
-              &mdash; ${escapeHtml(c.reason)}
+              <div style="margin-bottom: 6px;">
+                <span class="diff-removed">${escapeHtml(c.original)}</span>
+                &rarr;
+                <span class="diff-added">${escapeHtml(c.fixed)}</span>
+                &nbsp;<strong>${escapeHtml(c.reason)}</strong>
+              </div>
+              <div class="kg-exp-detail">${escapeHtml(c.explanation)}</div>
             </div>
           </div>
         `).join('');
