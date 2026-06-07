@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kgrammar — Korean Grammar Checker</title>
+  <meta name="description" content="Paste Korean text and get instant grammar corrections with explanations. Free AI-powered Korean grammar checker." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="kg-header">
+    <div class="kg-header-inner">
+      <div class="kg-logo">k<span>grammar</span></div>
+      <span class="kg-badge">beta</span>
+      <div style="flex:1"></div>
+      <p class="kg-tagline-header">AI-powered Korean grammar checker</p>
+    </div>
+  </header>
+
+  <main class="kg-main">
+    <div class="kg-hero">
+      <h1 class="kg-title">Fix your Korean, <em>instantly.</em></h1>
+      <p class="kg-subtitle">Paste any Korean text — grammar, spacing, and spelling errors corrected in seconds.</p>
+    </div>
+
+    <div class="kg-panels">
+      <div class="kg-panel">
+        <div class="kg-panel-header">
+          <span class="kg-panel-label">Your Korean</span>
+          <span class="kg-char-count" id="char-count">0 / 500</span>
+        </div>
+        <textarea
+          class="kg-input"
+          id="input-text"
+          placeholder="여기에 한국어를 입력하거나 붙여넣으세요..."
+          maxlength="500"
+          aria-label="Korean text input"
+        ></textarea>
+        <div class="kg-panel-footer">
+          <button class="kg-btn kg-btn-ghost" onclick="clearAll()">Clear</button>
+          <button class="kg-btn kg-btn-primary" id="check-btn" onclick="checkGrammar()">
+            Check grammar
+          </button>
+        </div>
+      </div>
+
+      <div class="kg-panel">
+        <div class="kg-panel-header">
+          <span class="kg-panel-label">Corrected</span>
+          <button class="kg-copy-btn" id="copy-btn" style="display:none" onclick="copyResult()">Copy</button>
+        </div>
+        <div class="kg-output" id="output" aria-live="polite">
+          <span class="kg-placeholder">Corrections will appear here...</span>
+        </div>
+        <div class="kg-panel-footer" id="output-footer" style="display:none">
+          <span class="kg-footer-note" id="error-count"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kg-explanations" id="explanations">
+      <div class="kg-exp-header">What was corrected</div>
+      <div class="kg-exp-body" id="exp-body"></div>
+    </div>
+
+    <div class="kg-info">
+      <div class="kg-info-card">
+        <div class="kg-info-icon">맞</div>
+        <div>
+          <p class="kg-info-title">Grammar & spacing</p>
+          <p class="kg-info-text">Catches particle errors, verb endings, and spacing mistakes common in Korean writing.</p>
+        </div>
+      </div>
+      <div class="kg-info-card">
+        <div class="kg-info-icon">→</div>
+        <div>
+          <p class="kg-info-title">Side-by-side view</p>
+          <p class="kg-info-text">See your original and the corrected version together, with changes highlighted.</p>
+        </div>
+      </div>
+      <div class="kg-info-card">
+        <div class="kg-info-icon">?</div>
+        <div>
+          <p class="kg-info-title">Plain English explanations</p>
+          <p class="kg-info-text">Every correction comes with a short explanation so you actually learn from it.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="kg-footer">
+    <p>kgrammar.com &mdash; Powered by Claude AI</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
