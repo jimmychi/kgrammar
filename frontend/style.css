@@ -573,3 +573,7 @@ body {
   color: var(--gray-600);
   font-weight: 300;
 }
+
+.kg-subtitle {
+  font-size: 15px;
+}
