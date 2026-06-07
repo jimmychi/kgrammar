@@ -34,6 +34,7 @@ function clearAll() {
   output.innerHTML = '<span class="kg-placeholder">Corrections will appear here...</span>';
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
+  document.getElementById('listen-btn').style.display = 'none';
   outputFooter.style.display = 'none';
   lastCorrected = '';
   textarea.focus();
@@ -68,6 +69,7 @@ async function checkGrammar() {
   output.innerHTML = '<div class="kg-loading"><div class="kg-spinner"></div><span>Analyzing your Korean...</span></div>';
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
+  document.getElementById('listen-btn').style.display = 'none';
   outputFooter.style.display = 'none';
   lastCorrected = '';
 
@@ -87,6 +89,7 @@ async function checkGrammar() {
 
     lastCorrected = result.corrected;
     copyBtn.style.display = 'block';
+    document.getElementById('listen-btn').style.display = 'block';
     outputFooter.style.display = 'flex';
 
     if (!result.hasErrors) {
@@ -124,4 +127,13 @@ async function checkGrammar() {
 
   checkBtn.disabled = false;
   checkBtn.textContent = 'Check grammar';
+}
+
+function listenKorean() {
+  if (!lastCorrected) return;
+  const utterance = new SpeechSynthesisUtterance(lastCorrected);
+  utterance.lang = 'ko-KR';
+  utterance.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
 }
