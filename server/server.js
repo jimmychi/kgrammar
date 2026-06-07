@@ -4,6 +4,8 @@ const rateLimit = require('express-rate-limit');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 app.use(cors({
   origin: [
     'https://kgrammar.com',
@@ -63,6 +65,12 @@ ${text}`;
         messages: [{ role: 'user', content: prompt }]
       })
     });
+
+    if (!response.ok) {
+      const errData = await response.json();
+      console.error('Anthropic error:', errData);
+      return res.status(500).json({ error: 'Anthropic API error.' });
+    }
 
     const data = await response.json();
     const raw = data.content.map(b => b.text || '').join('').trim();
