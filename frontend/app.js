@@ -84,7 +84,7 @@ async function extractTextFromImage(file) {
         charCount.textContent = data.text.length + ' / 500';
         // Set mode to translate-to-english since image likely contains Korean
         currentMode = 'translate-to-english';
-        checkBtn.textContent = 'Get Translation';
+        checkBtn.textContent = 'Translate';
       } else {
         textarea.placeholder = 'Could not extract text. Try another image.';
       }
@@ -210,5 +210,5 @@ async function checkGrammar() {
   }
 
   checkBtn.disabled = false;
-  checkBtn.textContent = mode === 'translate' ? 'Translate to Korean' : mode === 'translate-to-english' ? 'Get Translation' : 'Check Grammar';
+  checkBtn.textContent = mode === 'translate' ? 'Translate to Korean' : mode === 'translate-to-english' ? 'Translate' : 'Check Grammar';
 }
