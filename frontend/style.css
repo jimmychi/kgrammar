@@ -443,3 +443,66 @@ body {
   .kg-title { font-size: 32px; }
   .kg-tagline-header { display: none; }
 }
+
+.kg-drop-zone {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.kg-drop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(29, 158, 117, 0.08);
+  border: 2px dashed var(--green);
+  border-radius: var(--radius-md);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.kg-drop-overlay.active {
+  display: flex;
+}
+
+.kg-drop-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--green-dark);
+}
+
+.kg-drop-message span:first-child {
+  font-size: 32px;
+}
+
+.kg-panel-footer {
+  padding: 10px 14px;
+  border-top: 0.5px solid var(--gray-200);
+  background: var(--gray-100);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kg-upload-btn {
+  cursor: pointer;
+}
+
+.kg-extracting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--green-dark);
+  background: var(--green-light);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  margin: 8px 14px;
+}

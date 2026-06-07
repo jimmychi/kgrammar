@@ -35,7 +35,7 @@
     </div>
 
     <div class="kg-panels">
-      <div class="kg-panel">
+      <div class="kg-panel" id="left-panel">
         <div class="kg-panel-header">
           <span class="kg-panel-label">Paste your English or Korean text here</span>
           <div style="display:flex;align-items:center;gap:8px;">
@@ -43,13 +43,27 @@
             <button class="kg-copy-btn" onclick="clearAll()">Clear</button>
           </div>
         </div>
-        <textarea
-          class="kg-input"
-          id="input-text"
-          placeholder="여기에 한국어를 입력하거나 붙여넣으세요..."
-          maxlength="500"
-          aria-label="Korean text input"
-        ></textarea>
+        <div class="kg-drop-zone" id="drop-zone">
+          <textarea
+            class="kg-input"
+            id="input-text"
+            placeholder="여기에 한국어를 입력하거나 붙여넣으세요..."
+            maxlength="500"
+            aria-label="Korean text input"
+          ></textarea>
+          <div class="kg-drop-overlay" id="drop-overlay">
+            <div class="kg-drop-message">
+              <span>📷</span>
+              <span>Drop image to extract Korean text</span>
+            </div>
+          </div>
+        </div>
+        <div class="kg-panel-footer">
+          <label class="kg-copy-btn kg-upload-btn">
+            📷 Upload image
+            <input type="file" id="image-upload" accept="image/*" style="display:none" onchange="handleImageUpload(event)" />
+          </label>
+        </div>
       </div>
 
       <div class="kg-panel">

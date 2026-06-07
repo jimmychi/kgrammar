@@ -6,6 +6,8 @@ const explanations = document.getElementById('explanations');
 const expBody = document.getElementById('exp-body');
 const copyBtn = document.getElementById('copy-btn');
 const listenBtn = document.getElementById('listen-btn');
+const dropZone = document.getElementById('drop-zone');
+const dropOverlay = document.getElementById('drop-overlay');
 
 let lastCorrected = '';
 let currentMode = 'grammar';
@@ -17,7 +19,6 @@ function isKorean(text) {
 textarea.addEventListener('input', () => {
   const len = textarea.value.length;
   charCount.textContent = len + ' / 500';
-
   const text = textarea.value.trim();
   if (text.length === 0) {
     checkBtn.textContent = 'Check Grammar';
@@ -32,10 +33,71 @@ textarea.addEventListener('input', () => {
 });
 
 textarea.addEventListener('keydown', (e) => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-    checkGrammar();
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') checkGrammar();
+});
+
+// Drag and drop
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropOverlay.classList.add('active');
+});
+
+dropZone.addEventListener('dragleave', (e) => {
+  if (!dropZone.contains(e.relatedTarget)) {
+    dropOverlay.classList.remove('active');
   }
 });
+
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropOverlay.classList.remove('active');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    extractTextFromImage(file);
+  }
+});
+
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) extractTextFromImage(file);
+}
+
+async function extractTextFromImage(file) {
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result.split(',')[1];
+    const mediaType = file.type;
+
+    textarea.value = '';
+    textarea.placeholder = 'Extracting text from image...';
+    checkBtn.disabled = true;
+
+    try {
+      const res = await fetch('https://kgrammar.onrender.com/api/extract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ base64, mediaType })
+      });
+
+      const data = await res.json();
+      if (data.text) {
+        textarea.value = data.text;
+        charCount.textContent = data.text.length + ' / 500';
+        const event = new Event('input');
+        textarea.dispatchEvent(event);
+      } else {
+        textarea.placeholder = 'Could not extract text. Try another image.';
+      }
+    } catch (err) {
+      console.error(err);
+      textarea.placeholder = 'Error extracting text. Please try again.';
+    }
+
+    textarea.placeholder = '여기에 한국어를 입력하거나 붙여넣으세요...';
+    checkBtn.disabled = false;
+  };
+  reader.readAsDataURL(file);
+}
 
 function copyResult() {
   if (!lastCorrected) return;
@@ -51,7 +113,6 @@ function clearAll() {
   output.innerHTML = '<span class="kg-placeholder">Corrections will appear here...</span>';
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
-  
   lastCorrected = '';
   checkBtn.textContent = 'Check Grammar';
   currentMode = 'grammar';
@@ -92,13 +153,11 @@ async function checkGrammar() {
   if (!text) { textarea.focus(); return; }
 
   const mode = currentMode;
-
   checkBtn.disabled = true;
   checkBtn.textContent = mode === 'translate' ? 'Translating...' : 'Checking...';
   output.innerHTML = '<div class="kg-loading"><div class="kg-spinner"></div><span>' + (mode === 'translate' ? 'Translating to Korean...' : 'Analyzing your Korean...') + '</span></div>';
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
-  
   lastCorrected = '';
 
   try {
@@ -116,7 +175,6 @@ async function checkGrammar() {
     const result = await res.json();
     lastCorrected = result.corrected;
     copyBtn.style.display = 'block';
-    
 
     if (mode === 'translate') {
       output.innerHTML = '<div style="font-size: 17px; line-height: 1.75;">' + escapeHtml(result.corrected) + '</div>';
@@ -127,7 +185,6 @@ async function checkGrammar() {
           '<div style="padding: 4px 0; font-size: 17px; line-height: 1.75;">' + escapeHtml(result.corrected) + '</div>';
       } else {
         output.innerHTML = '<div style="font-size: 17px; line-height: 1.75;">' + buildCorrectedHtml(result.corrected, result.changes) + '</div>';
-
         if (result.changes && result.changes.length > 0) {
           expBody.innerHTML = result.changes.map((c, i) => `
             <div class="kg-exp-item">

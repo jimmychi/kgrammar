@@ -13,7 +13,7 @@ app.use(cors({
     'https://kgrammar-client.onrender.com'
   ]
 }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
@@ -21,7 +21,47 @@ const limiter = rateLimit({
   message: { error: 'Too many requests, please try again in an hour.' }
 });
 
-app.use('/api/check', limiter);
+app.use('/api/', limiter);
+
+app.post('/api/extract', async (req, res) => {
+  const { base64, mediaType } = req.body;
+  if (!base64 || !mediaType) return res.status(400).json({ error: 'No image provided.' });
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: { type: 'base64', media_type: mediaType, data: base64 }
+            },
+            {
+              type: 'text',
+              text: 'Extract all Korean or English text from this image. Return ONLY the extracted text, nothing else. No explanations, no formatting, just the raw text.'
+            }
+          ]
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content.map(b => b.text || '').join('').trim();
+    res.json({ text });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Could not extract text from image.' });
+  }
+});
 
 app.post('/api/check', async (req, res) => {
   const { text, mode } = req.body;
@@ -29,7 +69,6 @@ app.post('/api/check', async (req, res) => {
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
     return res.status(400).json({ error: 'No text provided.' });
   }
-
   if (text.length > 500) {
     return res.status(400).json({ error: 'Text too long.' });
   }
@@ -38,7 +77,6 @@ app.post('/api/check', async (req, res) => {
     ? `You are an expert Korean translator. Translate the following English text to natural, fluent Korean.
 Return ONLY a raw JSON object with this field:
 - "corrected": the Korean translation (string)
-
 Do NOT wrap in markdown or backticks. Respond ONLY with the raw JSON object.
 
 English text:
@@ -53,7 +91,6 @@ ${text}`
        "fixed": the corrected version (string)
        "reason": a short one-line summary of the error, max 10 words (string)
        "explanation": a full educational explanation (2-4 sentences) covering: what the grammar rule is, why the original was wrong, when to use the correct form, and a tip to remember it. Write this for an English-speaking Korean learner.
-
 Rules:
 - If the text is already correct, set hasErrors to false and changes to []
 - Do NOT wrap in markdown or backticks
@@ -87,7 +124,6 @@ ${text}`;
     const raw = data.content.map(b => b.text || '').join('').trim();
     const clean = raw.replace(/```json|```/g, '').trim();
     const result = JSON.parse(clean);
-
     res.json(result);
   } catch (err) {
     console.error(err);
