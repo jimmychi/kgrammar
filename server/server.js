@@ -9,6 +9,7 @@ app.set('trust proxy', 1);
 app.use(cors({
   origin: [
     'https://kgrammar.com',
+    'https://www.kgrammar.com',
     'https://kgrammar-client.onrender.com'
   ]
 }));
@@ -23,7 +24,7 @@ const limiter = rateLimit({
 app.use('/api/check', limiter);
 
 app.post('/api/check', async (req, res) => {
-  const { text } = req.body;
+  const { text, mode } = req.body;
 
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
     return res.status(400).json({ error: 'No text provided.' });
@@ -33,7 +34,16 @@ app.post('/api/check', async (req, res) => {
     return res.status(400).json({ error: 'Text too long.' });
   }
 
-  const prompt = `You are an expert Korean language teacher and grammar checker. The user will provide Korean text. Your job:
+  const prompt = mode === 'translate'
+    ? `You are an expert Korean translator. Translate the following English text to natural, fluent Korean.
+Return ONLY a raw JSON object with this field:
+- "corrected": the Korean translation (string)
+
+Do NOT wrap in markdown or backticks. Respond ONLY with the raw JSON object.
+
+English text:
+${text}`
+    : `You are an expert Korean language teacher and grammar checker. The user will provide Korean text. Your job:
 1. Correct any grammar, spelling, spacing, or punctuation errors
 2. Return ONLY a raw JSON object with exactly these fields:
    - "corrected": the fully corrected Korean text (string)
