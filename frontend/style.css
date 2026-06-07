@@ -583,3 +583,9 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 680px) {
+  .kg-word-section {
+    padding: 0;
+  }
+}
