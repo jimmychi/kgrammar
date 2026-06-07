@@ -51,7 +51,7 @@ function clearAll() {
   output.innerHTML = '<span class="kg-placeholder">Corrections will appear here...</span>';
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
-  listenBtn.style.display = 'none';
+  
   lastCorrected = '';
   checkBtn.textContent = 'Check Grammar';
   currentMode = 'grammar';
@@ -98,7 +98,7 @@ async function checkGrammar() {
   output.innerHTML = '<div class="kg-loading"><div class="kg-spinner"></div><span>' + (mode === 'translate' ? 'Translating to Korean...' : 'Analyzing your Korean...') + '</span></div>';
   explanations.classList.remove('visible');
   copyBtn.style.display = 'none';
-  listenBtn.style.display = 'none';
+  
   lastCorrected = '';
 
   try {
@@ -116,7 +116,7 @@ async function checkGrammar() {
     const result = await res.json();
     lastCorrected = result.corrected;
     copyBtn.style.display = 'block';
-    listenBtn.style.display = 'block';
+    
 
     if (mode === 'translate') {
       output.innerHTML = '<div style="font-size: 17px; line-height: 1.75;">' + escapeHtml(result.corrected) + '</div>';
